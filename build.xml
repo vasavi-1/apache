@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!-- set the project name, basedir and default target to be executed-->
+<project default="warTarget" basedir=".">
+        <!-- sets the properties here-->
+  
+  <property name="base" value="." />
+  <propery name="source" value="${base}/src"/>
+  <target name="warTarget">
+        <war warfile="Everest-TAF.war" needxmlfiles="false">
+                <fileset dir="${source}"/>
+        </war> 
+    
+        </target>
+  
+</project>
+  
