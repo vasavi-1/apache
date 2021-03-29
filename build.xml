@@ -2,15 +2,34 @@
  <!-- set the project name, basedir and default target to be executed-->
 <project default="warTarget" basedir=".">
         <!-- sets the properties here-->
-  
+  <property name="tomcat" value="/opt/tomcat"/>
+  <property name="tomcat.deployment" value="${tomcat}/webapps" />
+  <property name="tomcat.bin" value="${tomcat}/bin"/>
   <property name="base" value="." />
   <propery name="source" value="${base}/src"/>
   <target name="warTarget">
         <war warfile="Everest-TAF.war" needxmlfiles="false">
                 <fileset dir="${source}"/>
         </war> 
-    
+                         <antcall target="deployTarget" />
         </target>
   
+<target name="deployTarget">
+       <copy file="${base}/Everest-TAF.war" todir="${tomcat.deployment}"/>
+      <antcall target="startTomcat"/>
+</target>
+<target name="startTomcat" >
+        <exec executable="${tomcat.bin}/startup.sh"/>
+        <antcall target="script"/>
+ 
+</target>
+<target name="stopTomcat" >
+        <exec executable="${tomcat.bin}/shutdown.sh"/>
+</target>
+<target name="script">
+  <exec executable="/bin/bash">
+   <arg value="commit.sh"/>
+ </exec>
+</target> 
 </project>
   
